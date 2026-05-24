@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "hit-distance",
+	"version": "${version}",
+	"name": "Hit Distance",
+	"description": "Displaying distance of incoming hit. ",
+	"authors": [
+		"dsvl0"
+	],
+	"contact": {
+		"sources": "https://github.com/HitDistance"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/hit-distance/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.dsvl0.hitdistance.HitDistance"
+		],
+		"client": [
+			"com.dsvl0.hitdistance.client.HitDistanceClient"
+		],
+		"modmenu": [
+			"com.dsvl0.hitdistance.client.modmenu.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"hit-distance.mixins.json",
+		{
+			"config": "hit-distance.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.1",
+		"minecraft": ">=1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"badges": ["mod"]
+		}
+	}
+}
