@@ -2,9 +2,8 @@ package com.dsvl0.hitdistance.client.modmenu;
 
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.*;
-import dev.isxander.yacl3.gui.DescriptionWithName;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class ModMenuConfigScreen {
 
@@ -12,12 +11,12 @@ public class ModMenuConfigScreen {
         ModConfig cfg = ModConfig.INSTANCE;
 
         return YetAnotherConfigLib.createBuilder()
-                .title(Text.literal("HitDistance Settings"))
+                .title(Component.literal("HitDistance Settings"))  // Text → Component
                 .category(ConfigCategory.createBuilder()
-                        .name(Text.literal("General"))
+                        .name(Component.literal("General"))
 
                         .option(Option.<Boolean>createBuilder()
-                                .name(Text.literal("Enable mod"))
+                                .name(Component.literal("Enable mod"))
                                 .binding(true,
                                         () -> cfg.isModEnabled,
                                         v  -> cfg.isModEnabled = v)
@@ -25,7 +24,7 @@ public class ModMenuConfigScreen {
                                 .build())
 
                         .option(Option.<Boolean>createBuilder()
-                                .name(Text.literal("Ignore players in creative gamemode"))
+                                .name(Component.literal("Ignore players in creative gamemode"))
                                 .binding(true,
                                         () -> cfg.ignoreCreativeMode,
                                         v  -> cfg.ignoreCreativeMode = v)
@@ -33,7 +32,7 @@ public class ModMenuConfigScreen {
                                 .build())
 
                         .option(Option.<Boolean>createBuilder()
-                                .name(Text.literal("Hide after some time"))
+                                .name(Component.literal("Hide after some time"))
                                 .binding(true,
                                         () -> cfg.hideAfterTime,
                                         v  -> cfg.hideAfterTime = v)
@@ -41,7 +40,7 @@ public class ModMenuConfigScreen {
                                 .build())
 
                         .option(Option.<Boolean>createBuilder()
-                                .name(Text.literal("Show text on normal hits"))
+                                .name(Component.literal("Show text on normal hits"))
                                 .binding(true,
                                         () -> cfg.showOnNormalHits,
                                         v  -> cfg.showOnNormalHits = v)
@@ -49,13 +48,13 @@ public class ModMenuConfigScreen {
                                 .build())
 
                         .option(Option.<Pos>createBuilder()
-                                .name(Text.literal("Position"))
+                                .name(Component.literal("Position"))
                                 .binding(Pos.CROSS_RIGHT,
                                         () -> cfg.position,
                                         v  -> cfg.position = v)
                                 .controller(opt -> EnumControllerBuilder.create(opt)
                                         .enumClass(Pos.class)
-                                        .formatValue(v -> Text.literal(v.getDisplayName())))
+                                        .formatValue(v -> Component.literal(v.getDisplayName())))
                                 .build())
 
                         .build())
@@ -65,7 +64,7 @@ public class ModMenuConfigScreen {
     }
 
     public enum Pos {
-        CROSS_TOP, CROSS_BOTTOM, CROSS_LEFT, CROSS_RIGHT, BAR_TOP, BAR_END; // , BAR_START
+        CROSS_TOP, CROSS_BOTTOM, CROSS_LEFT, CROSS_RIGHT, BAR_TOP, BAR_END;
 
         public String getDisplayName() {
             return switch (this) {
@@ -74,7 +73,6 @@ public class ModMenuConfigScreen {
                 case CROSS_LEFT   -> "To the left of the crosshair";
                 case CROSS_RIGHT  -> "To the right of the crosshair";
                 case BAR_TOP      -> "Above the hotbar";
-                //case BAR_START    -> "To the left of the hotbar";
                 case BAR_END      -> "To the right of the hotbar";
             };
         }

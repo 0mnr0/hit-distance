@@ -1,7 +1,7 @@
 {
-	"required": false,
+	"required": true,
 	"package": "com.dsvl0.hitdistance.mixin",
-	"compatibilityLevel": "JAVA_21",
+	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"ExampleMixin"
 	],

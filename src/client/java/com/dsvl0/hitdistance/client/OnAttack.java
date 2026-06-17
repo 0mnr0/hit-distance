@@ -2,13 +2,11 @@ package com.dsvl0.hitdistance.client;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.damagesource.DamageSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class OnAttack {
     private static boolean listenerRegistered = false;
@@ -17,12 +15,12 @@ public class OnAttack {
 
     private static final List<DamageListener> listeners = new ArrayList<>();
     public interface DamageListener {
-        void onDamage(MinecraftClient client, DamageSource source);
+        void onDamage(Minecraft client, DamageSource source);
     }
     public static void addListener(DamageListener listener) {
         listeners.add(listener);
     }
-    public static void event(MinecraftClient client, DamageSource source){
+    public static void event(Minecraft client, DamageSource source){
         for (DamageListener listener : listeners) {
             listener.onDamage(client, source);
         }
@@ -40,7 +38,7 @@ public class OnAttack {
             listenerRegistered = true;
 
             ClientTickEvents.END_CLIENT_TICK.register(mcclient -> {
-                if (client.player == null || client.world == null) {
+                if (client.player == null || mcclient.level == null) {
                     lastHealth = -1.0f;
                     return;
                 }
@@ -53,7 +51,7 @@ public class OnAttack {
                 }
 
                 if (currentHealth < lastHealth) {
-                    DamageSource source = client.player.getRecentDamageSource();
+                    DamageSource source = client.player.getLastDamageSource();
                     event(client, source);
                 }
 

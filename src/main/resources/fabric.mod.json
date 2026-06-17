@@ -3,12 +3,13 @@
 	"id": "hit-distance",
 	"version": "${version}",
 	"name": "Hit Distance",
-	"description": "Displaying distance of incoming hit. ",
+	"description": "Displaying distance of incoming hit!",
 	"authors": [
 		"dsvl0"
 	],
 	"contact": {
-		"sources": "https://github.com/HitDistance"
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/0mnr0/Hit-Distance"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/hit-distance/icon.png",
@@ -32,14 +33,9 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.18.1",
-		"minecraft": ">=1.21.11",
-		"java": ">=21",
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1",
+		"java": ">=25",
 		"fabric-api": "*"
-	},
-	"custom": {
-		"modmenu": {
-			"badges": ["mod"]
-		}
 	}
 }

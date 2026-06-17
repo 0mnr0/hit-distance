@@ -1,81 +1,49 @@
 package com.dsvl0.hitdistance.client;
 
 import com.dsvl0.hitdistance.client.modmenu.ModMenuConfigScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font; // было: net.minecraft.client.font.TextRenderer
 
 public class TextPosCalc {
-    private static MinecraftClient client;
-    private static TextRenderer textRenderer;
-    public static void setClient(MinecraftClient globalClient) {
+    private static Minecraft client;
+    private static Font font; // было: TextRenderer textRenderer
+
+    public static void setClient(Minecraft globalClient) {
         client = globalClient;
-        if (client == null) client = MinecraftClient.getInstance();
-        textRenderer = client.textRenderer;
+        if (client == null) client = Minecraft.getInstance();
+        font = client.font; // было: client.textRenderer
     }
 
-    private static TextRenderer getTextRenderer() {
-        if (client == null) client = MinecraftClient.getInstance();
-        return client.textRenderer;
+    private static Font getFont() { // было: getTextRenderer()
+        if (client == null) client = Minecraft.getInstance();
+        return client.font; // было: client.textRenderer
     }
 
+    public static int getX(String text, HudText textView, ModMenuConfigScreen.Pos pos) {
+        if (font == null) setClient(client);
 
-
-
-    public static int getX(String text, HudText textView, ModMenuConfigScreen.Pos Pos) {
-        // warnText.x = warnText.getCenterOptimalX() + 6;
-        if (textRenderer == null) {setClient(client);}
-
-        int position;
-        switch (Pos) {
-            case CROSS_LEFT -> {
-                position = textView.getCenterOptimalX() - getTextRenderer().getWidth(text) - 6;
-            }
-            case CROSS_RIGHT -> {
-                position = textView.getCenterOptimalX() + 6;
-            }
-            case CROSS_BOTTOM, CROSS_TOP, BAR_TOP -> {
-                position = textView.getCenterOptimalX() - (getTextRenderer().getWidth(text) / 2);
-            }
-//          case BAR_START -> {
-//              position = HotbarBounds.getLeft() - getTextRenderer().getWidth(text) - 10;
-//          }
-            case BAR_END -> {
-                position = HotbarBounds.getRight() + 4;
-            }
-
-            default -> position = textView.getCenterOptimalX() - (getTextRenderer().getWidth(text) / 2);
-        }
-
-
-        return position;
+        return switch (pos) {
+            case CROSS_LEFT   -> textView.getCenterOptimalX() - getFont().width(text) - 6;
+            case CROSS_RIGHT  -> textView.getCenterOptimalX() + 6;
+            case CROSS_BOTTOM,
+                 CROSS_TOP,
+                 BAR_TOP      -> textView.getCenterOptimalX() - (getFont().width(text) / 2);
+            case BAR_END      -> HotbarBounds.getRight() + 4;
+            default           -> textView.getCenterOptimalX() - (getFont().width(text) / 2);
+        };
     }
 
+    public static int getY(String text, HudText textView, ModMenuConfigScreen.Pos pos) {
+        if (font == null) setClient(client);
 
-
-    public static int getY(String text, HudText textView, ModMenuConfigScreen.Pos Pos) {
-        if (textRenderer == null) {setClient(client);}
-
-        int position;
-        switch (Pos) {
-            case CROSS_LEFT, CROSS_RIGHT -> {
-                position = textView.getCenterOptimalY() - (getTextRenderer().fontHeight / 2) + 2;
-            }
-            case CROSS_BOTTOM -> {
-                position = textView.getCenterOptimalY() + 8;
-            }
-            case CROSS_TOP -> {
-                position = textView.getCenterOptimalY() - 12;
-            }
-            case BAR_TOP -> {
-                position = HotbarBounds.getTop() - getTextRenderer().fontHeight - 16;
-            }
-            case BAR_END -> { //BAR_START
-                position = HotbarBounds.getBottom() - getTextRenderer().fontHeight - 3;
-            }
-            default -> position = textView.getCenterOptimalX() - (getTextRenderer().getWidth(text) / 2);
-        }
-
-
-        return position;
+        return switch (pos) {
+            case CROSS_LEFT,
+                 CROSS_RIGHT  -> textView.getCenterOptimalY() - (getFont().lineHeight / 2) + 2;
+            case CROSS_BOTTOM -> textView.getCenterOptimalY() + 8;
+            case CROSS_TOP    -> textView.getCenterOptimalY() - 12;
+            case BAR_TOP      -> HotbarBounds.getTop() - getFont().lineHeight - 16;
+            case BAR_END      -> HotbarBounds.getBottom() - getFont().lineHeight - 3;
+            default           -> textView.getCenterOptimalX() - (getFont().width(text) / 2);
+        };
     }
 }

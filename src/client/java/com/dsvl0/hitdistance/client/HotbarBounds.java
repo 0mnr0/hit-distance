@@ -1,6 +1,6 @@
 package com.dsvl0.hitdistance.client;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class HotbarBounds {
     private static final int HOTBAR_WIDTH  = 182;
@@ -23,10 +23,10 @@ public class HotbarBounds {
     }
 
     private static int getScaledWidth() {
-        return MinecraftClient.getInstance().getWindow().getScaledWidth();
+        return Minecraft.getInstance().getWindow().getGuiScaledWidth();
     }
 
     private static int getScaledHeight() {
-        return MinecraftClient.getInstance().getWindow().getScaledHeight();
+        return Minecraft.getInstance().getWindow().getGuiScaledHeight();
     }
 }

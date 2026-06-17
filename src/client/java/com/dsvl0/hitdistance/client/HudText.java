@@ -1,36 +1,33 @@
 package com.dsvl0.hitdistance.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class HudText {
     public String text;
     public int x, y;
     public int color;
     public boolean shadow;
-    TextRenderer Renderer;
-    MinecraftClient client;
     public float scale = 1f;
 
-    public HudText(String text, int x, int y, int color, boolean shadow, MinecraftClient MCClient) {
+    private final Minecraft client;
+
+    public HudText(String text, int x, int y, int color, boolean shadow, Minecraft mcClient) {
         this.text = text;
         this.x = x;
         this.y = y;
         this.color = color;
         this.shadow = shadow;
-        client = MCClient;
+        this.client = mcClient;
     }
 
-    public void render(DrawContext ctx, TextRenderer renderer) {
-        Renderer = renderer;
+    public void render(GuiGraphicsExtractor graphics) {
+        var matrices = graphics.pose();
+        matrices.pushMatrix();
+        matrices.scale(scale, scale);
 
-        ctx.getMatrices().pushMatrix();
-
-        ctx.getMatrices().scale(scale, scale);
-
-        ctx.drawText(
-                renderer,
+        graphics.text(
+                client.font,
                 text,
                 (int)(x / scale),
                 (int)(y / scale),
@@ -38,17 +35,14 @@ public class HudText {
                 shadow
         );
 
-        ctx.getMatrices().popMatrix();
+        matrices.popMatrix();
     }
 
-
-    public int getCenterOptimalY (){
-        int screenHeight = client.getWindow().getScaledHeight();
-        return screenHeight / 2;
+    public int getCenterOptimalY() {
+        return client.getWindow().getGuiScaledHeight() / 2;
     }
 
-    public int getCenterOptimalX (){
-        int screenWidth = client.getWindow().getScaledWidth();
-        return screenWidth / 2;
+    public int getCenterOptimalX() {
+        return client.getWindow().getGuiScaledWidth() / 2;
     }
 }
