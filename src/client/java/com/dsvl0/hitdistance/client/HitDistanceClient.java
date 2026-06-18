@@ -85,9 +85,7 @@ public class HitDistanceClient implements ClientModInitializer {
 
 
 	public void newAttack(Minecraft client, DamageSource source){
-		if ( source.getEntity() instanceof Player && client.player != null ) {
-			Player attacker = (Player) source.getEntity();
-
+		if ( source != null && source.getEntity() instanceof Player attacker && client.player != null ) {
             double distance = distanceBetweenHitboxes(
                     client.player,
                     attacker
