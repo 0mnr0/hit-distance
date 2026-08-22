@@ -27,9 +27,9 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation "com.terraformersmc:modmenu:15.0.2"
-	modImplementation "me.shedaniel.cloth:cloth-config-fabric:19.0.147"
-	modImplementation "dev.isxander:yet-another-config-lib:3.7.1+1.21.6-fabric"
+	modImplementation "com.terraformersmc:modmenu:16.0.1"
+	modImplementation "me.shedaniel.cloth:cloth-config-fabric:20.0.149"
+	modImplementation "dev.isxander:yet-another-config-lib:3.8.2+1.21.10-fabric"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
