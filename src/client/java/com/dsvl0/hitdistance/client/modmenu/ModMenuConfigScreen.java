@@ -11,7 +11,7 @@ public class ModMenuConfigScreen {
         ModConfig cfg = ModConfig.INSTANCE;
 
         return YetAnotherConfigLib.createBuilder()
-                .title(Component.literal("HitDistance Settings"))  // Text → Component
+                .title(Component.literal("HitDistance Settings"))  // Text  Component
                 .category(ConfigCategory.createBuilder()
                         .name(Component.literal("General"))
 

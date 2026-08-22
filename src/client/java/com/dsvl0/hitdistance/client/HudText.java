@@ -1,7 +1,7 @@
 package com.dsvl0.hitdistance.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class HudText {
     public String text;
@@ -21,12 +21,12 @@ public class HudText {
         this.client = mcClient;
     }
 
-    public void render(GuiGraphicsExtractor graphics) {
+    public void render(GuiGraphics graphics) {
         var matrices = graphics.pose();
         matrices.pushMatrix();
         matrices.scale(scale, scale);
 
-        graphics.text(
+        graphics.drawString(
                 client.font,
                 text,
                 (int)(x / scale),
