@@ -3,7 +3,7 @@
 	"id": "hit-distance",
 	"version": "${version}",
 	"name": "Hit Distance",
-	"description": "Displaying distance of incoming hit!",
+	"description": "Displaying distance of your opponent hit!",
 	"authors": [
 		"dsvl0"
 	],
@@ -32,8 +32,8 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.19.3",
-		"minecraft": ">=26.1",
+		"fabricloader": ">=0.19.5",
+		"minecraft": ">=26.3",
 		"java": ">=25",
 		"fabric-api": "*"
 	}

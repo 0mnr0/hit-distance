@@ -12,8 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 
-import javax.swing.*;
-
 public class HitDistanceClient implements ClientModInitializer {
 
 	private static final String MOD_ID = "hitdistance";
@@ -32,12 +30,12 @@ public class HitDistanceClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+
 		ModConfig.load();
 		client = Minecraft.getInstance();
 		TextPosCalc.setClient(client);
 		warnText = new HudText(text, 20, 20, 0xFFFFFFFF, false, client);
 
-		// Новый API: вместо HudRenderCallback.EVENT.register(...)
 		HudElementRegistry.attachElementBefore(
 				VanillaHudElements.CHAT,
 				Identifier.fromNamespaceAndPath(MOD_ID, "warn_text"),
@@ -71,7 +69,6 @@ public class HitDistanceClient implements ClientModInitializer {
 		OnAttack.addListener(this::newAttack);
 	}
 
-
 	public void setWarn(double distance) {
 
 		distance = Math.round(distance * 10.0) / 10.0;
@@ -83,32 +80,31 @@ public class HitDistanceClient implements ClientModInitializer {
 		halfAlphaAnim = false;
 	}
 
-
 	public void newAttack(Minecraft client, DamageSource source){
 		if ( source != null && source.getEntity() instanceof Player attacker && client.player != null ) {
-            double distance = distanceBetweenHitboxes(
-                    client.player,
-                    attacker
-            );
-            if (distance < 3.02 && distance >= 3) {distance = 3;}
+			double distance = distanceBetweenHitboxes(
+					client.player,
+					attacker
+			);
+			if (distance < 3.02 && distance >= 3) {distance = 3;}
 
-            boolean isInCreative = attacker.isCreative();
-            boolean showIfNormal = ModConfig.INSTANCE.showOnNormalHits;
+			boolean isInCreative = attacker.isCreative();
+			boolean showIfNormal = ModConfig.INSTANCE.showOnNormalHits;
 
 
-            if (!isInCreative || !ModConfig.INSTANCE.ignoreCreativeMode) {
-                if (distance > MAX_SURVIVAL_DISTANCE_HIT) {
-                    setWarn(distance);
-                    warnText.color = 0xFFFF8F8F;
-                } else if (showIfNormal) {
-                    setWarn(distance);
-                    halfAlphaAnim = true;
-                    timer = 40;
-                    warnText.color = 0x80FFFFFF;
-                }
-            }
+			if (!isInCreative || !ModConfig.INSTANCE.ignoreCreativeMode) {
+				if (distance > MAX_SURVIVAL_DISTANCE_HIT) {
+					setWarn(distance);
+					warnText.color = 0xFFFF8F8F;
+				} else if (showIfNormal) {
+					setWarn(distance);
+					halfAlphaAnim = true;
+					timer = 40;
+					warnText.color = 0x80FFFFFF;
+				}
+			}
 
-        } else {
+		} else {
 		}
 	}
 
